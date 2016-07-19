@@ -1,11 +1,11 @@
 cesium-elevation-gradient
 =========================
 
-An elevation visualiser for Cesium.  Elevation samples from a terrain provider are passed to a 2D WebGL renderer.  The renderer then applies a combination of...
+An elevation visualiser for [Cesium](https://cesiumjs.org/).  Elevation samples from a terrain provider are passed to a 2D WebGL renderer.  The renderer then applies a combination of...
 
 * Colour ramp on elevation value
 * Hillshade algorithm
-* Contours lines
+* Contours line algorithm
 
 This terrain provider is a contribution to the Cesium community by [Propeller Aerobotics](https://www.propelleraero.com/) and is licensed under the same license as Cesium (Apache 2.0).
 
