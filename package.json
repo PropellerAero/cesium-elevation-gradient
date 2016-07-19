@@ -4,7 +4,7 @@
   "description": "Elevation gradient plugin for Cesium",
   "main": "lib/ElevationGradientImageryProvider.js",
   "scripts": {
-    "deploy": "gh-pages -d dist",
+    "deploy": "webpack -p && gh-pages -d dist",
     "start": "webpack-dev-server --progress --display-error-details",
     "postinstall": "rm -rf dist && mkdir dist && cp -r ./node_modules/cesium/Build/Cesium/* ./dist"
   },

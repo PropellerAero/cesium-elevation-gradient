@@ -44,7 +44,7 @@ function setUpElevationGradient(viewer) {
     imageryLayer.alpha = 1.0;
 }
 
-function initCameraLocation(viewer) {;
+function initCameraLocation(viewer) {
     var target = Cartesian3.fromDegrees(130.7359, -25.2990);
     var offset = new Cartesian3(1700, 1700, 1700);
     viewer.camera.lookAt(target, offset);
