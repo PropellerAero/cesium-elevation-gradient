@@ -3,7 +3,7 @@ var HtmlPlugin = require('html-webpack-plugin');
 module.exports = {
     entry: "./app.js",
     output: {
-        path: __dirname + '/public',
+        path: __dirname + '/dist',
         filename: "bundle.js",
         sourcePrefix: ''
     },
@@ -14,7 +14,7 @@ module.exports = {
         })
     ],
     devServer: {
-        contentBase: './public',
+        contentBase: './dist',
     },
     module: {
         unknownContextCritical: false,
