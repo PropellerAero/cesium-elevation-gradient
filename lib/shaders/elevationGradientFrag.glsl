@@ -100,7 +100,6 @@ vec3 applyGrad(float normalisedElevation){
 
 vec3 applyGamma(vec3 col){
     return clamp(pow(col, vec3(0.8)), vec3(0.), vec3(1.));
-//    return clamp(col, vec3(0.), vec3(1.));
 }
 
 // Useful for debugging
