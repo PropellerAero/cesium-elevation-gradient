@@ -7,6 +7,9 @@ uniform vec2 u_tileDimension;
 uniform float u_zFactor;
 uniform float u_zenith;
 uniform float u_azimuth;
+uniform float u_majorContour;
+uniform float u_minorContour;
+uniform float u_gradOpacity;
 
 varying vec2 v_texCoord;
 
@@ -14,8 +17,8 @@ uniform vec2 u_tileElevationRange;
 uniform vec2 u_terrainElevationRange;
 
 #define M_PI 3.1415926535897932384626433832795
-#define CONTOUR_MAJOR_OPACITY 0.75
-#define CONTOUR_MINOR_OPACITY 0.25
+#define CONTOUR_MAJOR_OPACITY 1.0
+#define CONTOUR_MINOR_OPACITY 0.3
 
 vec3 light = vec3(255., 231., 177.) / vec3(255.);
 vec3 shade = vec3(3., 152., 255.) / vec3(255.);
@@ -127,9 +130,9 @@ void main() {
     vec3 colourGrad = applyGrad(ne);
     vec3 colourHillshade = applyTint(hillshade);
 
-    float contour = calcContour(1.0, 10., a, b, c, d, e, f, g, h, i);
+    float contour = calcContour(u_minorContour, u_majorContour, a, b, c, d, e, f, g, h, i);
 
-    float alpha = ne > 0.01 ? 0.5: 0.0;
+    float alpha = ne > 0.01 ? u_gradOpacity: 0.0;
     vec4 litColour = vec4(applyGamma(colourGrad * colourHillshade) * alpha, alpha);
 
     gl_FragColor = mix(litColour, vec4(1.,1.,1.,1.), contour);
