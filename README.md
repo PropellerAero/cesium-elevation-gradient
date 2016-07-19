@@ -1,6 +1,8 @@
 cesium-elevation-gradient
 =========================
 
+<img src="https://cloud.githubusercontent.com/assets/484870/16941251/53f82342-4dd2-11e6-962b-444d27e11024.jpg" width="535">
+
 An elevation visualiser for [Cesium](https://cesiumjs.org/) acting as an imagery provider.  Elevation samples from a terrain provider are passed to a 2D WebGL renderer.  The renderer then applies a combination of the following algorithms:
 
 * Colour ramp
