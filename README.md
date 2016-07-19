@@ -11,7 +11,7 @@ An elevation visualiser for [Cesium](https://cesiumjs.org/) acting as an imagery
 
 This imagery provider is a contribution to the Cesium community by [Propeller Aerobotics](https://www.propelleraero.com/) and is licensed under the same license as Cesium (Apache 2.0).
 
-View the [live demo](https://propelleraero.github.io/cesium-elevation-gradient/).
+**View the [live demo](https://propelleraero.github.io/cesium-elevation-gradient/).**
 
 Running the test app with a local server
 ----------------------------------------
