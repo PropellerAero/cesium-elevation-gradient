@@ -33,17 +33,20 @@ function setUpElevationGradient(viewer) {
     var scene = viewer.scene;
 
     var imageryLayer = scene.imageryLayers.addImageryProvider(new ElevationGradient({
-        terrainProvider: terrainProvider
+        terrainProvider: terrainProvider,
+        minElevation: 0,
+        maxElevation: 500,
+        majorContour: 25,
+        minorContour: 5
     }));
 
     // You can control overall layer opacity here...
     imageryLayer.alpha = 1.0;
 }
 
-function lookAtBondi(viewer) {
-
-    var target = new Cartesian3(-4647988.670718573, 2547030.843191364, -3536558.5025399784);
-    var offset = new Cartesian3(500, 500, 500);
+function initCameraLocation(viewer) {;
+    var target = Cartesian3.fromDegrees(130.7359, -25.2990);
+    var offset = new Cartesian3(1700, 1700, 1700);
     viewer.camera.lookAt(target, offset);
     viewer.camera.lookAtTransform(Matrix4.IDENTITY);
 }
@@ -82,5 +85,5 @@ function setUpMouseInfo(viewer) {
 
 setUpTerrain(viewer);
 setUpElevationGradient(viewer);
-lookAtBondi(viewer);
+initCameraLocation(viewer);
 setUpMouseInfo(viewer);
