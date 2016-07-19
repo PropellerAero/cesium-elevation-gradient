@@ -34,7 +34,7 @@ function setUpElevationGradient(viewer) {
 
     scene.imageryLayers.addImageryProvider(new ElevationGradient({
         terrainProvider: terrainProvider,
-        minElevation: 30,
+        minElevation: 25,
         maxElevation: 100
     }));
 }
