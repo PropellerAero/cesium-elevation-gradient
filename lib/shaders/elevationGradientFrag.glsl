@@ -95,7 +95,8 @@ vec3 applyTint(float hillshade) {
 }
 
 vec3 applyGrad(float normalisedElevation){
-    return hsv2rgb(vec3((1.0 - normalisedElevation) * 0.8, 0.95, 0.1 + 1.2 * normalisedElevation));
+    float x = mod(normalisedElevation, 1.);
+    return hsv2rgb(vec3((1.0 - x) * 0.8, 0.95, 0.1 + 1.2 * x));
 }
 
 vec3 applyGamma(vec3 col){
@@ -123,13 +124,13 @@ void main() {
     float hillshade = calcHillshade(a, b, c, d, e, f, g, h, i);
 
     float ne = (e - u_terrainElevationRange.x) / (u_terrainElevationRange.y - u_terrainElevationRange.x);
-    float alpha = ne > 0.01 ? 1.0: 0.0;
     vec3 colourGrad = applyGrad(ne);
     vec3 colourHillshade = applyTint(hillshade);
 
     float contour = calcContour(1.0, 10., a, b, c, d, e, f, g, h, i);
 
-    vec4 litColour = vec4(applyGamma(colourGrad * colourHillshade), alpha);
+    float alpha = ne > 0.01 ? 0.5: 0.0;
+    vec4 litColour = vec4(applyGamma(colourGrad * colourHillshade) * alpha, alpha);
 
     gl_FragColor = mix(litColour, vec4(1.,1.,1.,1.), contour);
 }

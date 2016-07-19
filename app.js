@@ -32,11 +32,13 @@ function setUpElevationGradient(viewer) {
     var terrainProvider = viewer.terrainProvider;
     var scene = viewer.scene;
 
-    scene.imageryLayers.addImageryProvider(new ElevationGradient({
+    var imageryLayer = scene.imageryLayers.addImageryProvider(new ElevationGradient({
         terrainProvider: terrainProvider,
-        minElevation: 25,
+        minElevation: 0,
         maxElevation: 100
     }));
+
+    imageryLayer.alpha = 1.0;
 }
 
 function lookAtBondi(viewer) {
