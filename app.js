@@ -33,9 +33,7 @@ function setUpElevationGradient(viewer) {
     var scene = viewer.scene;
 
     var imageryLayer = scene.imageryLayers.addImageryProvider(new ElevationGradient({
-        terrainProvider: terrainProvider,
-        minElevation: 0,
-        maxElevation: 100
+        terrainProvider: terrainProvider
     }));
 
     imageryLayer.alpha = 1.0;
