@@ -5,9 +5,9 @@ An elevation visualiser for [Cesium](https://cesiumjs.org/).  Elevation samples 
 
 * Colour ramp on elevation value
 * Hillshade algorithm
-* Contours line algorithm
+* Contour line algorithm
 
-This terrain provider is a contribution to the Cesium community by [Propeller Aerobotics](https://www.propelleraero.com/) and is licensed under the same license as Cesium (Apache 2.0).
+This imagery provider is a contribution to the Cesium community by [Propeller Aerobotics](https://www.propelleraero.com/) and is licensed under the same license as Cesium (Apache 2.0).
 
 Up and running
 --------------
