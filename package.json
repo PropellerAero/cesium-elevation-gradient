@@ -6,7 +6,7 @@
   "scripts": {
     "deploy": "webpack -p && gh-pages -d dist",
     "start": "webpack-dev-server --progress --display-error-details",
-    "postinstall": "rm -rf dist && mkdir dist && cp -r ./node_modules/cesium/Build/Cesium/* ./dist"
+    "postinstall": "mkdir -p ./dist && cp -r ./node_modules/cesium/Build/Cesium/* ./dist"
   },
   "repository": {
     "type": "git",
