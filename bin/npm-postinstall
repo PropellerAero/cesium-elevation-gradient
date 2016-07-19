@@ -1,0 +1,3 @@
+var exec = require('child_process').exec;
+
+exec('mkdir -p dist && cp -r node_modules/cesium/Build/Cesium/* dist/.');
