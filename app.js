@@ -36,6 +36,7 @@ function setUpElevationGradient(viewer) {
         terrainProvider: terrainProvider
     }));
 
+    // You can control overall layer opacity here...
     imageryLayer.alpha = 1.0;
 }
 

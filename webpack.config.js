@@ -5,6 +5,7 @@ module.exports = {
     output: {
         path: __dirname + '/dist',
         filename: "bundle.js",
+        publicPath: '/cesium-elevation-gradient/',
         sourcePrefix: ''
     },
     plugins: [
