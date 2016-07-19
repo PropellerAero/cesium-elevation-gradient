@@ -19,7 +19,10 @@ module.exports = {
     },
     module: {
         unknownContextCritical: false,
-        loaders: [{
+        loaders: [, {
+                test: /\.(glsl|vs|fs)$/,
+                loaders: ['shader']
+            }, {
                 test: /\.jsx?$/,
                 loaders: ['babel'],
                 exclude: /node_modules/,
