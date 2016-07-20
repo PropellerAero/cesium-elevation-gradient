@@ -14,7 +14,7 @@ This imagery provider is a contribution to the Cesium community by [Propeller Ae
 **View the [live demo](https://propelleraero.github.io/cesium-elevation-gradient/).**
 
 Run the test app with a local server
-----------------------------------------
+------------------------------------
 ```
 npm install
 npm start
