@@ -19,8 +19,7 @@
   },
   "homepage": "https://github.com/PropellerAero/cesium-elevation-gradient#readme",
   "dependencies": {
-    "babel-plugin-glslify": "^1.0.2",
-    "cesium": "1.22.2"
+    "babel-plugin-glslify": "^1.0.2"
   },
   "devDependencies": {
     "babel-core": "^6.10.4",
@@ -32,5 +31,8 @@
     "shader-loader": "^1.1.4",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1"
+  },
+  "peerDependencies" : {
+    "cesium": ">=1.22"
   }
 }
