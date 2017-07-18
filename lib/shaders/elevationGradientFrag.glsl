@@ -11,11 +11,11 @@ uniform float u_majorContour;
 uniform float u_minorContour;
 uniform float u_gradOpacity;
 
-#define MAX_GRADIENT_STOPS 32
+// external GRADIENT_STOP_COUNT
 
 uniform int u_gradientStopCount;
-uniform vec4 u_gradientColors[32];
-uniform float u_gradientHeights[32];
+uniform vec4 u_gradientColors[GRADIENT_STOP_COUNT];
+uniform float u_gradientHeights[GRADIENT_STOP_COUNT];
 
 varying vec2 v_texCoord;
 
@@ -124,17 +124,14 @@ vec4 calcGradientColour(float e){
         return u_gradientColors[0];
     }
 
-    for(int i = 1; i < 32; ++i){
-        if(i >= u_gradientStopCount){
-            return u_gradientColors[i-1];
-        }
+    for(int i = 1; i < GRADIENT_STOP_COUNT; ++i){
         if(e <= u_gradientHeights[i]){
             float a = (e - u_gradientHeights[i-1]) / (u_gradientHeights[i] - u_gradientHeights[i-1]);
             return mix(u_gradientColors[i-1], u_gradientColors[i], a);
         }
     }
 
-    return vec4(0,0,0,0);
+    return u_gradientColors[GRADIENT_STOP_COUNT-1];
 }
 
 void main() {
@@ -160,7 +157,7 @@ void main() {
 
     float alpha = (e > u_elevationRange.z) ? u_gradOpacity : 0.0;
     //vec4 litColour = vec4(applyGamma(colourGrad * colourHillshade) * alpha, alpha);
-    vec4 litColour = calcGradientColour(e);
+    vec4 litColour = calcGradientColour(e) * vec4(colourHillshade, 1);
 
     gl_FragColor = mix(litColour, vec4(1.,1.,1.,1.), contour);
 }
