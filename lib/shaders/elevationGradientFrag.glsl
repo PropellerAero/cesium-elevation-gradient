@@ -2,6 +2,7 @@ precision mediump float;
 
 // our texture
 uniform sampler2D u_image;
+uniform sampler2D u_mask;
 uniform vec2 u_textureSize;
 uniform vec2 u_tileDimension;
 uniform float u_zFactor;
@@ -136,6 +137,9 @@ vec4 calcGradientColour(float e){
 void main() {
     vec2 onePixel = vec2(1.0, 1.0) / u_textureSize;
 
+    vec4 maskColour = texture2D(u_mask, v_texCoord);
+    float maskValue = maskColour.a;
+
     float a = getElevation(v_texCoord + onePixel * vec2(-1.0, -1.0));
     float b = getElevation(v_texCoord + onePixel * vec2( 0.0, -1.0));
     float c = getElevation(v_texCoord + onePixel * vec2( 1.0, -1.0));
@@ -156,7 +160,7 @@ void main() {
 
     float alpha = (e > u_elevationRange.z) ? u_gradOpacity : 0.0;
     //vec4 litColour = vec4(applyGamma(colourGrad * colourHillshade) * alpha, alpha);
-    vec4 litColour = calcGradientColour(e) * vec4(colourHillshade, 1);
+    vec4 litColour = calcGradientColour(e) * vec4(colourHillshade, maskValue);
 
-    gl_FragColor = mix(litColour, vec4(1.,1.,1.,1.), contour);
+    gl_FragColor = mix(litColour, vec4(1.,1.,1.,maskValue), contour);
 }
