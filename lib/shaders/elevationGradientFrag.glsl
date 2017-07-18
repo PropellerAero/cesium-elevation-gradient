@@ -13,7 +13,6 @@ uniform float u_gradOpacity;
 
 // external GRADIENT_STOP_COUNT
 
-uniform int u_gradientStopCount;
 uniform vec4 u_gradientColors[GRADIENT_STOP_COUNT];
 uniform float u_gradientHeights[GRADIENT_STOP_COUNT];
 
