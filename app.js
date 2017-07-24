@@ -1,4 +1,4 @@
-require('cesium/Source/Widgets/widgets.css');
+import 'cesium/Source/Widgets/widgets.css';
 
 import BuildModuleUrl from 'cesium/Source/Core/buildModuleUrl';
 import Cartesian3 from 'cesium/Source/Core/Cartesian3';
