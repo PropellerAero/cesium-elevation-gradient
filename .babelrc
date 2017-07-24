@@ -1,4 +1,8 @@
 {
-  "plugins" : ["glslify"],
-  "presets": ["es2015"]
+  "plugins": [
+    "glslify",
+    "transform-object-rest-spread",
+    "transform-class-properties"
+  ],
+  "presets": ["es2015", "airbnb"]
 }
