@@ -2,6 +2,7 @@ precision mediump float;
 
 // our texture
 uniform sampler2D u_image;
+uniform sampler2D u_mask;
 uniform vec2 u_textureSize;
 uniform vec2 u_tileDimension;
 uniform float u_zFactor;
@@ -11,10 +12,16 @@ uniform float u_majorContour;
 uniform float u_minorContour;
 uniform float u_gradOpacity;
 
+// external GRADIENT_STOP_COUNT
+
+uniform vec4 u_gradientColors[GRADIENT_STOP_COUNT];
+uniform float u_gradientHeights[GRADIENT_STOP_COUNT];
+
 varying vec2 v_texCoord;
 
 uniform vec2 u_tileElevationRange;
 uniform vec3 u_elevationRange;
+
 
 #define M_PI 3.1415926535897932384626433832795
 #define CONTOUR_MAJOR_OPACITY 1.0
@@ -99,7 +106,8 @@ vec3 applyTint(float hillshade) {
 
 vec3 applyGrad(float normalisedElevation){
     float x = mod(normalisedElevation, 1.);
-    return hsv2rgb(vec3((1.0 - x) * 0.8, 0.95, 0.1 + 1.2 * x));
+    //return hsv2rgb(vec3((1.0 - x) * 0.8, 0.95, 0.1 + 1.2 * x));
+    return hsv2rgb(vec3((1.0-x), 1.0, x));
 }
 
 vec3 applyGamma(vec3 col){
@@ -111,8 +119,26 @@ float rand(vec2 co){
     return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
 }
 
+vec4 calcGradientColour(float e){
+    if(e <= u_gradientHeights[0]){
+        return u_gradientColors[0];
+    }
+
+    for(int i = 1; i < GRADIENT_STOP_COUNT; ++i){
+        if(e <= u_gradientHeights[i]){
+            float a = (e - u_gradientHeights[i-1]) / (u_gradientHeights[i] - u_gradientHeights[i-1]);
+            return mix(u_gradientColors[i-1], u_gradientColors[i], a);
+        }
+    }
+
+    return u_gradientColors[GRADIENT_STOP_COUNT-1];
+}
+
 void main() {
     vec2 onePixel = vec2(1.0, 1.0) / u_textureSize;
+
+    vec4 maskColour = texture2D(u_mask, v_texCoord);
+    float maskValue = maskColour.a;
 
     float a = getElevation(v_texCoord + onePixel * vec2(-1.0, -1.0));
     float b = getElevation(v_texCoord + onePixel * vec2( 0.0, -1.0));
@@ -133,7 +159,8 @@ void main() {
     float contour = calcContour(u_minorContour, u_majorContour, a, b, c, d, e, f, g, h, i);
 
     float alpha = (e > u_elevationRange.z) ? u_gradOpacity : 0.0;
-    vec4 litColour = vec4(applyGamma(colourGrad * colourHillshade) * alpha, alpha);
+    //vec4 litColour = vec4(applyGamma(colourGrad * colourHillshade) * alpha, alpha);
+    vec4 litColour = calcGradientColour(e) * vec4(colourHillshade, maskValue);
 
-    gl_FragColor = mix(litColour, vec4(1.,1.,1.,1.), contour);
+    gl_FragColor = mix(litColour, vec4(1.,1.,1.,maskValue), contour);
 }
