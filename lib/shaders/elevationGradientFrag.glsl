@@ -10,7 +10,6 @@ uniform float u_zenith;
 uniform float u_azimuth;
 uniform float u_majorContour;
 uniform float u_minorContour;
-uniform float u_gradOpacity;
 
 // external GRADIENT_STOP_COUNT
 
@@ -20,8 +19,6 @@ uniform float u_gradientHeights[GRADIENT_STOP_COUNT];
 varying vec2 v_texCoord;
 
 uniform vec2 u_tileElevationRange;
-uniform vec3 u_elevationRange;
-
 
 #define M_PI 3.1415926535897932384626433832795
 #define CONTOUR_MAJOR_OPACITY 1.0
@@ -31,13 +28,6 @@ vec3 light = vec3(255., 231., 177.) / vec3(255.);
 vec3 shade = vec3(3., 152., 255.) / vec3(255.);
 
 vec2 cellsize = u_tileDimension / u_textureSize;
-
-vec3 hsv2rgb(vec3 c)
-{
-    vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
-    vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
-    return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
-}
 
 float colourToElevation(vec4 col){
     float range = u_tileElevationRange.y - u_tileElevationRange.x;
@@ -104,12 +94,6 @@ vec3 applyTint(float hillshade) {
     return mix(shade, light, hillshade) * hillshade * 1.2;
 }
 
-vec3 applyGrad(float normalisedElevation){
-    float x = mod(normalisedElevation, 1.);
-    //return hsv2rgb(vec3((1.0 - x) * 0.8, 0.95, 0.1 + 1.2 * x));
-    return hsv2rgb(vec3((1.0-x), 1.0, x));
-}
-
 vec3 applyGamma(vec3 col){
     return clamp(pow(col, vec3(0.8)), vec3(0.), vec3(1.));
 }
@@ -152,14 +136,10 @@ void main() {
 
     float hillshade = calcHillshade(a, b, c, d, e, f, g, h, i);
 
-    float ne = (e - u_elevationRange.x) / (u_elevationRange.y - u_elevationRange.x);
-    vec3 colourGrad = applyGrad(ne);
     vec3 colourHillshade = applyTint(hillshade);
 
     float contour = calcContour(u_minorContour, u_majorContour, a, b, c, d, e, f, g, h, i);
 
-    float alpha = (e > u_elevationRange.z) ? u_gradOpacity : 0.0;
-    //vec4 litColour = vec4(applyGamma(colourGrad * colourHillshade) * alpha, alpha);
     vec4 litColour = calcGradientColour(e) * vec4(colourHillshade, maskValue);
 
     gl_FragColor = mix(litColour, vec4(1.,1.,1.,maskValue), contour);
