@@ -10,11 +10,12 @@ uniform float u_zenith;
 uniform float u_azimuth;
 uniform float u_majorContour;
 uniform float u_minorContour;
+uniform float u_hillshadeAmount;
 
 // external GRADIENT_STOP_COUNT
 
 uniform vec4 u_gradientColors[GRADIENT_STOP_COUNT];
-uniform float u_gradientHeights[GRADIENT_STOP_COUNT];
+uniform float u_gradientValues[GRADIENT_STOP_COUNT];
 
 varying vec2 v_texCoord;
 
@@ -104,13 +105,13 @@ float rand(vec2 co){
 }
 
 vec4 calcGradientColour(float e){
-    if(e <= u_gradientHeights[0]){
+    if(e <= u_gradientValues[0]){
         return u_gradientColors[0];
     }
 
     for(int i = 1; i < GRADIENT_STOP_COUNT; ++i){
-        if(e <= u_gradientHeights[i]){
-            float a = (e - u_gradientHeights[i-1]) / (u_gradientHeights[i] - u_gradientHeights[i-1]);
+        if(e <= u_gradientValues[i]){
+            float a = (e - u_gradientValues[i-1]) / (u_gradientValues[i] - u_gradientValues[i-1]);
             return mix(u_gradientColors[i-1], u_gradientColors[i], a);
         }
     }
@@ -134,7 +135,7 @@ void main() {
     float h = getElevation(v_texCoord + onePixel * vec2( 0.0,  1.0));
     float i = getElevation(v_texCoord + onePixel * vec2( 1.0,  1.0));
 
-    float hillshade = calcHillshade(a, b, c, d, e, f, g, h, i);
+    float hillshade = mix(1., calcHillshade(a, b, c, d, e, f, g, h, i), u_hillshadeAmount);
 
     vec3 colourHillshade = applyTint(hillshade);
 
