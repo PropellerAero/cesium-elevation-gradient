@@ -11,6 +11,8 @@ uniform float u_azimuth;
 uniform float u_majorContour;
 uniform float u_minorContour;
 uniform float u_hillshadeAmount;
+uniform float u_gradientAmount;
+uniform float u_contourAmount;
 
 // external GRADIENT_STOP_COUNT
 
@@ -139,9 +141,9 @@ void main() {
 
     vec3 colourHillshade = applyTint(hillshade);
 
-    float contour = calcContour(u_minorContour, u_majorContour, a, b, c, d, e, f, g, h, i);
+    float contour = u_contourAmount * calcContour(u_minorContour, u_majorContour, a, b, c, d, e, f, g, h, i);
 
-    vec4 litColour = calcGradientColour(e) * vec4(colourHillshade, maskValue);
+    vec4 litColour = calcGradientColour(e) * vec4(colourHillshade, maskValue) * u_gradientAmount;
 
     gl_FragColor = mix(litColour, vec4(1.,1.,1.,maskValue), contour);
 }
