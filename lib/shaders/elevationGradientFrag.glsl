@@ -141,7 +141,10 @@ void main() {
 
     vec3 colourHillshade = applyTint(hillshade);
 
-    float contour = u_contourAmount * calcContour(u_minorContour, u_majorContour, a, b, c, d, e, f, g, h, i);
+    vec4 gradientColor = calcGradientColour(e);
+    float contourAmount = gradientColor.a > CONTOUR_OPACITY_THRESHOLD ? u_contourAmount : 0.;
+
+    float contour = contourAmount * calcContour(u_minorContour, u_majorContour, a, b, c, d, e, f, g, h, i);
 
     vec4 litColour = calcGradientColour(e) * vec4(colourHillshade, maskValue) * u_gradientAmount;
 
