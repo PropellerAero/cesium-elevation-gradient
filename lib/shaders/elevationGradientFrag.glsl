@@ -13,6 +13,7 @@ uniform float u_minorContour;
 uniform float u_hillshadeAmount;
 uniform float u_gradientAmount;
 uniform float u_contourAmount;
+uniform float u_useSlope;
 
 // external GRADIENT_STOP_COUNT
 
@@ -40,6 +41,12 @@ float colourToElevation(vec4 col){
 float getElevation(vec2 coord){
     vec4 col = texture2D(u_image, coord);
     return colourToElevation(col);
+}
+
+float calcSlope(float a, float b, float c, float d, float e, float f, float g, float h, float i) {
+    float dzdx = ((c + 2.0 * f + i) - (a + 2.0 * d + g)) / (8.0 * cellsize.x);
+    float dzdy = ((g + 2.0 * h + i) - (a + 2.0 * b + c)) / (8.0 * cellsize.y);
+    return atan(sqrt(dzdx * dzdx + dzdy * dzdy)) * 180. / M_PI;
 }
 
 float calcHillshade(float a, float b, float c, float d, float e, float f, float g, float h, float i){
@@ -141,12 +148,14 @@ void main() {
 
     vec3 colourHillshade = applyTint(hillshade);
 
-    vec4 gradientColor = calcGradientColour(e);
+    float slope = calcSlope(a, b, c, d, e, f, g, h, i);
+
+    vec4 gradientColor = calcGradientColour(u_useSlope > 0.5 ? slope : e);
     float contourAmount = gradientColor.a > CONTOUR_OPACITY_THRESHOLD ? u_contourAmount : 0.;
 
     float contour = contourAmount * calcContour(u_minorContour, u_majorContour, a, b, c, d, e, f, g, h, i);
 
-    vec4 litColour = calcGradientColour(e) * vec4(colourHillshade, maskValue) * u_gradientAmount;
+    vec4 litColour = gradientColor * vec4(colourHillshade, maskValue) * u_gradientAmount;
 
     gl_FragColor = mix(litColour, vec4(1.,1.,1.,maskValue), contour);
 }
