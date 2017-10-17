@@ -155,7 +155,9 @@ void main() {
 
     float contour = contourAmount * calcContour(u_minorContour, u_majorContour, a, b, c, d, e, f, g, h, i);
 
-    vec4 litColour = gradientColor * vec4(colourHillshade, maskValue) * u_gradientAmount;
+    vec4 litColour = gradientColor * vec4(vec3(0.0, 0.0, 0.0), maskValue) * u_gradientAmount;
 
-    gl_FragColor = mix(litColour, vec4(1.,1.,1.,maskValue), contour);
+    vec4 unmaskedColour = mix(litColour, vec4(1.0, 1.0, 1.0, 1.0), contour);
+
+    gl_FragColor = mix(vec4(0.0, 0.0, 0.0, 0.0), unmaskedColour, maskValue);
 }
