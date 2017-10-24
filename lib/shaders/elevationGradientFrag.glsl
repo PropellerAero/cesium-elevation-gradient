@@ -14,6 +14,7 @@ uniform float u_hillshadeAmount;
 uniform float u_gradientAmount;
 uniform float u_contourAmount;
 uniform float u_useSlope;
+uniform vec4 u_contourColor;
 
 // external GRADIENT_STOP_COUNT
 
@@ -157,7 +158,7 @@ void main() {
 
     vec4 litColour = gradientColor * vec4(colourHillshade, 1.0) * u_gradientAmount;
 
-    vec4 unmaskedColour = mix(litColour, vec4(1.0, 1.0, 1.0, 1.0), contour);
+    vec4 unmaskedColour = mix(litColour, u_contourColor, contour);
 
     gl_FragColor = mix(vec4(0.0, 0.0, 0.0, 0.0), unmaskedColour, maskValue);
 }
