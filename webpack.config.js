@@ -1,10 +1,10 @@
 var HtmlPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: "./app.js",
+    entry: './app.js',
     output: {
         path: __dirname + '/dist',
-        filename: "bundle.js",
+        filename: 'bundle.js',
         publicPath: '/cesium-elevation-gradient/',
         sourcePrefix: ''
     },
@@ -19,18 +19,31 @@ module.exports = {
     },
     module: {
         unknownContextCritical: false,
-        loaders: [, {
+        rules: [
+            {
                 test: /\.(glsl|vs|fs)$/,
-                loaders: ['shader']
+                use: {
+                    loader: 'shader-loader'
+                }
             }, {
                 test: /\.jsx?$/,
-                loaders: ['babel'],
+                use: {
+                    loader: 'babel-loader'
+                },
                 exclude: /node_modules/,
                 include: __dirname
             },
-            { test: /\.css$/, loader: "style!css" }, {
+            { 
+                test: /\.css$/,
+                use: [
+                    'style-loader',
+                    'css-loader'
+                ]
+            }, {
                 test: /\.(png|gif|jpg|jpeg)$/,
-                loader: 'file-loader'
+                use: {
+                    loader: 'file-loader'
+                }
             }
         ]
     }
