@@ -1,7 +1,7 @@
 cesium-elevation-gradient
 =========================
 
-**NOTE: Cesium can now has built in support for elevation gradients and contours.  See the [Globe Materials](https://cesiumjs.org/Cesium/Build/Apps/Sandcastle/?src=Globe%20Materials.html&label=Showcases) example in the Sandcastle.**
+**NOTE: Cesium now has built in support for elevation gradients and contours.  See the [Globe Materials](https://cesiumjs.org/Cesium/Build/Apps/Sandcastle/?src=Globe%20Materials.html&label=Showcases) example in the Sandcastle.**
 
 <img src="https://cloud.githubusercontent.com/assets/484870/16941251/53f82342-4dd2-11e6-962b-444d27e11024.jpg" width="535">
 
