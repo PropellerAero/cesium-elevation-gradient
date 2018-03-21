@@ -1,17 +1,24 @@
 import 'cesium/Source/Widgets/widgets.css';
 
-import BuildModuleUrl from 'cesium/Source/Core/buildModuleUrl';
-import Cartesian3 from 'cesium/Source/Core/Cartesian3';
-import CesiumMath from 'cesium/Source/Core/Math';
-import CesiumTerrainProvider from 'cesium/Source/Core/CesiumTerrainProvider';
-import Matrix4 from 'cesium/Source/Core/Matrix4';
-import ScreenSpaceEventHandler from 'cesium/Source/Core/ScreenSpaceEventHandler';
-import ScreenSpaceEventType from 'cesium/Source/Core/ScreenSpaceEventType';
-import Viewer from 'cesium/Source/Widgets/Viewer/Viewer';
-import {WGS84} from 'cesium/Source/Core/Ellipsoid';
-import ElevationGradient from './lib/ElevationGradientImageryProvider';
+import Cesium from 'cesium/Source/Cesium'
+import ElevationGradient from './lib/ElevationGradientImageryProvider'
+const {
+    Cartesian3,
+    CesiumMath,
+    CesiumTerrainProvider,
+    Ellipsoid,
+    Matrix4,
+    Rectangle,
+    ScreenSpaceEventHandler,
+    ScreenSpaceEventType,
+    Viewer,
+    buildModuleUrl,
+    sampleTerrainMostDetailed,
+} = Cesium
 
-BuildModuleUrl.setBaseUrl('./');
+const { WGS84 } = Ellipsoid
+
+buildModuleUrl.setBaseUrl('./');
 
 const viewer = new Viewer('cesiumContainer');
 
@@ -29,13 +36,56 @@ const setUpElevationGradient = (viewer) => {
     const terrainProvider = viewer.terrainProvider;
     const scene = viewer.scene;
 
+    const valueSampler = (positions, level) => (
+        sampleTerrainMostDetailed(terrainProvider, positions).then(
+            (sampledPositions) => sampledPositions.map(position => position.height)
+        )
+    )
+    formatContourLabel: value => `${value.toFixed(2)} m`
+
     const imageryLayer = scene.imageryLayers.addImageryProvider(new ElevationGradient({
-        terrainProvider,
-        gradientMinElevation: 500,
-        gradientMaxElevation: 1000,
-        opacityMinElevation: 650,
+        valueSampler,
+        readyPromise: terrainProvider.readyPromise,
         majorContour: 25,
-        minorContour: 5
+        minorContour: 5,
+        gradient: [
+            {
+                "color": {
+                    "red": 0,
+                    "green": 0,
+                    "blue": 0,
+                    "alpha": 0
+                },
+                "value": 600
+            },
+            {
+                "color": {
+                    "red": 0,
+                    "green": 0,
+                    "blue": 1,
+                    "alpha": 0.5
+                },
+                "value": 600
+            },
+            {
+                "color": {
+                    "red": 1,
+                    "green": 0,
+                    "blue": 0,
+                    "alpha": 0.5
+                },
+                "value": 1000
+            },
+            {
+                "color": {
+                    "red": 0,
+                    "green": 0,
+                    "blue": 0,
+                    "alpha": 0
+                },
+                "value": 1000
+            }
+        ]
     }));
 
     // You can control overall layer opacity here...
