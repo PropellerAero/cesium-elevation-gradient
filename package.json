@@ -1,6 +1,6 @@
 {
   "name": "@propelleraero/cesium-elevation-gradient",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "Elevation gradient plugin for Cesium",
   "main": "lib/ElevationGradientImageryProvider.js",
   "scripts": {
