@@ -1,9 +1,12 @@
 {
   "name": "cesium-elevation-gradient",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Elevation gradient plugin for Cesium",
   "main": "lib/ElevationGradientImageryProvider.js",
   "scripts": {
+    "build": "npm run build:clean && npm run build:lib",
+    "build:clean": "rimraf dist",
+    "build:lib": "babel lib --out-dir dist --source-maps",
     "deploy": "webpack -p && gh-pages -d dist",
     "start": "webpack-dev-server --config webpack.config.js",
     "postinstall": "node bin/npm-postinstall"
@@ -19,6 +22,7 @@
   },
   "homepage": "https://github.com/PropellerAero/cesium-elevation-gradient#readme",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
     "babel-plugin-glslify": "^1.0.2",
