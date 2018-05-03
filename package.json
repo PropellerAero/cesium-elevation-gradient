@@ -1,6 +1,6 @@
 {
   "name": "cesium-elevation-gradient",
-  "version": "1.0.1",
+  "version": "2.1.2",
   "description": "Elevation gradient plugin for Cesium",
   "main": "lib/ElevationGradientImageryProvider.js",
   "scripts": {
