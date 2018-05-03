@@ -1,5 +1,5 @@
 {
-  "name": "cesium-elevation-gradient",
+  "name": "@propelleraero/cesium-elevation-gradient",
   "version": "2.1.2",
   "description": "Elevation gradient plugin for Cesium",
   "main": "lib/ElevationGradientImageryProvider.js",
@@ -25,7 +25,8 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
-    "babel-plugin-glslify": "^1.0.2",
+    "babel-plugin-glslify": "^2.0.0",
+    "babel-plugin-inline-import": "^2.0.6",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-airbnb": "^2.4.0",

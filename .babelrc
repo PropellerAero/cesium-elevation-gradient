@@ -2,7 +2,11 @@
   "plugins": [
     "glslify",
     "transform-object-rest-spread",
-    "transform-class-properties"
+    "transform-class-properties",
+    [
+        "babel-plugin-inline-import",
+        { "extensions": [ ".glsl" ] }
+    ]
   ],
   "presets": ["es2015", "airbnb"]
 }
