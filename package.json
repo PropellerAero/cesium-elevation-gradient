@@ -49,7 +49,4 @@
   "peerDependencies": {
     "cesium": ">=1.22"
   },
-  "dependencies": {
-    "@propelleraero/isomorphic-canvas": "^0.1.0"
-  }
 }
