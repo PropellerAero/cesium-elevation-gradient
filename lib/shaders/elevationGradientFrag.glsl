@@ -159,6 +159,7 @@ void main() {
     vec4 litColour = gradientColor * vec4(colourHillshade, 1.0) * u_gradientAmount;
 
     vec4 unmaskedColour = mix(litColour, u_contourColor, contour);
+    vec4 clampedColour = clamp(unmaskedColour, vec4(0.0), vec4(unmaskedColour.a));
 
-    gl_FragColor = mix(vec4(0.0, 0.0, 0.0, 0.0), unmaskedColour, maskValue);
+    gl_FragColor = mix(vec4(0.0, 0.0, 0.0, 0.0), clampedColour, maskValue);
 }
